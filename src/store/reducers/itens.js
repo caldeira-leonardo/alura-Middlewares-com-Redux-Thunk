@@ -13,9 +13,6 @@ const itensSlice = createSlice({
   name: "itens",
   initialState,
   reducers: {
-    adicionarItens: (state, { payload }) => {
-      state.push(...payload);
-    },
     mudarFavorito: (state, { payload }) => {
       state.map((item) => {
         if (item.id === payload) item.favorito = !item.favorito;
@@ -35,18 +32,13 @@ const itensSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(buscarItens.fulfilled, (state, { payload }) => {
-      state.push(...payload);
+    builder.addCase(buscarItens.fulfilled, (_, { payload }) => {
+      return payload;
     });
   },
 });
 
-export const {
-  mudarFavorito,
-  cadastrarItem,
-  mudarItem,
-  deletarItem,
-  adicionarItens,
-} = itensSlice.actions;
+export const { mudarFavorito, cadastrarItem, mudarItem, deletarItem } =
+  itensSlice.actions;
 
 export default itensSlice.reducer;
