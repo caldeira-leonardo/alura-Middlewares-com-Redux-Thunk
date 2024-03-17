@@ -32,9 +32,16 @@ const itensSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(buscarItens.fulfilled, (_, { payload }) => {
-      return payload;
-    });
+    builder
+      .addCase(buscarItens.fulfilled, (_, { payload }) => {
+        return payload;
+      })
+      .addCase(buscarItens.pending, (state, { payload }) => {
+        console.log("carregando itens"); // remove logs
+      })
+      .addCase(buscarItens.rejected, (state, { payload }) => {
+        console.log("busca de itens rejeitda"); // remove logs
+      });
   },
 });
 
