@@ -1,13 +1,17 @@
 import Button from "components/Button";
 import Header from "components/Header";
 import Item from "components/Item";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Categoria.module.scss";
+import { useEffect } from "react";
+import { buscarItens } from "store/reducers/itens";
 
 export default function Categoria() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { nomeCategoria } = useParams();
+
   const { categoria, itens } = useSelector((state) => {
     const regexp = new RegExp(state.busca, "i");
     return {
@@ -19,6 +23,10 @@ export default function Categoria() {
       ),
     };
   });
+
+  useEffect(() => {
+    if (!itens.length) dispatch(buscarItens());
+  }, [dispatch, itens]);
 
   return (
     <div>
